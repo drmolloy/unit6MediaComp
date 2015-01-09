@@ -233,23 +233,40 @@ public class Picture extends SimplePicture
         } 
     }
     
-    public void mirrorHorizontalTopToBottom()
+    public void mirrorHorizontal()
     {
         Pixel[][] pixels = this.getPixels2D();
-        Pixel topPixel = null;
-        Pixel bottomPixel = null;
-        int width = pixels[0].length;
-        for (int col = 0; col < pixels.length; col++)
+        Pixel leftPixel = null;
+        Pixel rightPixel = null;
+        int height = pixels.length;
+        for (int row = 0; row < height / 2; row++)
         {
-          for (int row = 0; row < width / 2; row++)
+          for (int col = 0; col < pixels[0].length; col++)
           {
-            topPixel = pixels[row][col];
-            bottomPixel = pixels[row][width - 1 - row];
-            topPixel.setColor(topPixel.getColor());
+            leftPixel = pixels[row][col];
+            rightPixel = pixels[height-1-row][col];
+            leftPixel.setColor(rightPixel.getColor());
           }
         }
     }
-
+    
+    public void mirrorHorizontalBotToTop()
+    {
+        Pixel[][] pixels = this.getPixels2D();
+        Pixel leftPixel = null;
+        Pixel rightPixel = null;
+        int height = pixels.length;
+        for (int row = 0; row < height / 2; row++)
+        {
+          for (int col = 0; col < pixels[0].length; col++)
+          {
+            leftPixel = pixels[row][col];
+            rightPixel = pixels[height-1-row][col];
+            rightPixel.setColor(leftPixel.getColor());
+          }
+        }
+    }
+    
     /* Main method for testing - each class in Java can have a main 
      * method 
      */
@@ -258,6 +275,12 @@ public class Picture extends SimplePicture
         Picture beach = new Picture("beach.jpg");
         beach.explore();
         beach.zeroBlue();
+        beach.explore();
+        beach.mirrorVerticalRightToLeft();
+        beach.explore();
+        beach.mirrorHorizontal();
+        beach.explore();
+        beach.mirrorHorizontalBotToTop();
         beach.explore();
     }
 

@@ -97,6 +97,21 @@ public class Picture extends SimplePicture
             }
         }
     }
+    
+    public void keepOnlyBlue()
+    {
+        Pixel[][] pixels = this.getPixels2D();
+        for (Pixel[] rowArray : pixels)
+        {
+            for (Pixel pixel10bj : rowArray)
+            {
+                pixel10bj.setRed(0);
+                pixel10bj.setGreen(0);
+            }
+        }
+           
+    }
+    
 
     /** Method that mirrors the picture around a 
      * vertical mirror in the center of the picture
@@ -267,21 +282,55 @@ public class Picture extends SimplePicture
         }
     }
     
+    public void mirrorDiagonal()
+    {
+        int shortest = 0;
+        Pixel[][] pixels = this.getPixels2D();
+        Pixel bottomLeftPixel = null;
+        Pixel topRightPixel = null;
+        int height = pixels.length;
+        int width = pixels[0].length;
+        if (height > width)
+        {
+            shortest = width;
+        }
+        else
+        {
+            shortest = height;
+        }
+        for (int row = 0; row < shortest; row++)
+        {
+          for (int col = 0; col < shortest; col++)
+          {
+              bottomLeftPixel = pixels[row][col];
+              topRightPixel = pixels[col][row];
+              topRightPixel.setColor(bottomLeftPixel.getColor());
+          }
+        }
+    }
+    
+    
+    
     /* Main method for testing - each class in Java can have a main 
      * method 
      */
     public static void main(String[] args) 
     {
         Picture beach = new Picture("beach.jpg");
-        beach.explore();
-        beach.zeroBlue();
-        beach.explore();
-        beach.mirrorVerticalRightToLeft();
-        beach.explore();
-        beach.mirrorHorizontal();
-        beach.explore();
-        beach.mirrorHorizontalBotToTop();
-        beach.explore();
+//         beach.explore();
+//         beach.zeroBlue();
+//         beach.explore();
+//         beach.mirrorVerticalRightToLeft();
+//         beach.explore();
+//         beach.mirrorHorizontal();
+//         beach.explore();
+//         beach.mirrorHorizontalBotToTop();
+//         beach.explore();
+//         beach.mirrorDiagonal();
+//         beach.explore();
+//         beach.zeroBlue();
+           beach.keepOnlyBlue(); 
+           beach.explore();
     }
 
 } // this } is the end of class Picture, put all new methods before this

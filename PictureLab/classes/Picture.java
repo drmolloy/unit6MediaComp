@@ -103,14 +103,28 @@ public class Picture extends SimplePicture
         Pixel[][] pixels = this.getPixels2D();
         for (Pixel[] rowArray : pixels)
         {
-            for (Pixel pixel10bj : rowArray)
+            for (Pixel pixelObj : rowArray)
             {
-                pixel10bj.setRed(0);
-                pixel10bj.setGreen(0);
+                pixelObj.setRed(0);
+                pixelObj.setGreen(pixelObj.getGreen()-100);
+                pixelObj.setBlue(pixelObj.getBlue() - 10);
             }
         }
     }
     
+    public void keepOnlyRed()
+    {
+        Pixel[][] pixels = this.getPixels2D();
+        for (Pixel[] rowArray : pixels)
+        {
+            for (Pixel pixelObj : rowArray)
+            {
+                pixelObj.setBlue(pixelObj.getBlue()-100);
+                pixelObj.setGreen(pixelObj.getGreen()-100);
+                pixelObj.setRed(pixelObj.getRed() - 10);
+            }
+        }
+    }
     public void negate()
     {
         Pixel[][] pixels = this.getPixels2D();
@@ -402,44 +416,38 @@ public class Picture extends SimplePicture
         }
     }
    
+    public void collage(Picture pic)
+    {
+        Picture ski1 = new Picture("ski.jpg");
+        Picture ski2 = new Picture("ski.jpg");
+        Picture ski3 = new Picture("ski.jpg");
+        Picture ski4 = new Picture("ski.jpg");
+        
+        ski1.mirrorDiagonal();
+        ski2.mirrorVertical();
+        ski3.mirrorVerticalRightToLeft();
+        ski4.mirrorHorizontal();
+        ski1.zeroBlue();
+        ski2.grayscale();
+        ski3.keepOnlyBlue();
+        ski4.keepOnlyRed();
+        
+        pic.copy(ski1,0,0);
+        pic.copy(ski2,300,0);
+        pic.copy(ski3,0,471);
+        pic.copy(ski4,300,471);
+    }
+    
     
     /* Main method for testing - each class in Java can have a main 
      * method 
      */
     public static void main(String[] args) 
     {
-        Picture beach = new Picture("beach.jpg");
-        Picture snowman = new Picture("snowman.jpg");
-        Picture seagull = new Picture("seagull.jpg");
-        Picture water = new Picture("water.jpg");
-//         beach.explore();
-//         beach.zeroBlue();
-//         beach.explore();
-//         beach.mirrorVerticalRightToLeft();
-//         beach.explore();
-//         beach.mirrorHorizontal();
-//         beach.explore();
-//         beach.mirrorHorizontalBotToTop();
-//         beach.explore();
-//         beach.mirrorDiagonal();
-//         beach.explore();
-//         beach.zeroBlue();
-//         beach.keepOnlyBlue(); 
-//         beach.explore();
-//         beach.mirrorTemple();
-//         snowman.explore();
-//         snowman.mirrorArms();
-//         snowman.explore();
-//         seagull.mirrorGull();
-//         seagull.explore();
-//            seagull.negate();
-//            seagull.explore();
-//            beach.negate();
-//            beach.explore();
-//            seagull.grayscale();
-//            seagull.explore();
-           water.fixUnderwater();
-           water.explore();
+        Picture canvas = new Picture(600,944);
+        canvas.collage(canvas);
+        canvas.explore();
+        canvas.write("My Collage.jpg");
     }
 
 } // this } is the end of class Picture, put all new methods before this
